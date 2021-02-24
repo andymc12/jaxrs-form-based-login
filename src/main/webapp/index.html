@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Liberty JAX-RS Form-based login demo</title>
+</head>
+<body>
+
+<h2>Form-based login with JAX-RS</h2>
+
+<p>To demonstrate, first try an endpoint that is not secured:</p>
+<br/>(1) <a href="rest/notSecuredHello" target="_blank">Not secured JAX-RS endpoint</a> <br/>
+
+<p>It should say "Hello (not secured) null" - because no authentication has occurred, so the server doesn't know who is
+    accessing this resource.</p>
+
+<p>Next, try an endpoint that is secured. This should take you to a login page - enter "user1" for the username and
+    "pass1" for the password and then click the "Login" button.</p>
+<br/>(2) <a href="rest/hello" target="_blank" >Hello JAX-RS endpoint - secure</a> <br/>
+
+<p>After logging in successfully, you should be automatically redirected to a page that says "Hello user1". Now the 
+    server knows who is logged in (user1).</p>
+
+<p>Next, go back to the non-secured endpoint:</p>
+<br/>(3) <a href="rest/notSecuredHello" target="_blank">Not secured JAX-RS endpoint</a> <br/>
+<p>Now it says "Hello (not secured) user1" because the server now knows who you are - even on unsecured endpoints!</p>
+
+<p>Now, let's access a resource that is only accessible to users in group1 (which includes user1):</p>
+<br/>(4) <a href="rest/hello/group1only" target="_blank" >Hello JAX-RS endpoint - secure - group1 only</a> <br/>
+<p>Cool, we can access this exclusive page!</p>
+
+<p>Now let's try to access that exclusive page after logging out and logging back in as a different user. First log
+    out:</p>
+<br/>(5) <a href="logout.jsp" target="_blank" >Log out</a> <br/>
+<p>Next log back in to the "hello page", but this time use user2/pass2 as the username/password.</p>
+<br/>(6) <a href="rest/hello" target="_blank" >Hello JAX-RS endpoint - secure</a> <br/>
+<p>Finally, try to access the exclusive page - but don't be too disappointed when you can't get there...</p>
+<br/>(7) <a href="rest/hello/group1only" target="_blank" >Hello JAX-RS endpoint - secure - group1 only</a> <br/>
+</body>
+</html>

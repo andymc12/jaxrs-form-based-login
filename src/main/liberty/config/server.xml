@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="${project.name}">
+
+    <featureManager>
+        <feature>jaxrs-2.1</feature>
+        <feature>appSecurity-3.0</feature>
+        <feature>jsp-2.3</feature>
+    </featureManager>
+    
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443"/>
+
+    <webApplication location="${project.name}.war" contextRoot="/">
+        <classloader apiTypeVisibility="+third-party" />
+        <application-bnd>
+            <security-role name="group1">
+                <user name="user1" />
+            </security-role>
+            <security-role name="group2">
+                <user name="user2" />
+            </security-role>
+        </application-bnd>
+    </webApplication>
+
+    <webAppSecurity ssoUseDomainFromURL="true" />
+<!--
+    <webApplication id="jaxrs20ltpa" location="jaxrs20ltpa.war"
+        name="jaxrs20ltpa">
+        <application-bnd>
+            <security-role name="BasicLogin_WebUsers">
+                <user name="user1" />
+            </security-role>
+        </application-bnd>
+    </webApplication>
+-->
+    <basicRegistry id="myRegistry">
+        <user name="user1" password="pass1" />
+        <user name="user2" password="pass2" />
+        <group name="group1">
+            <member name="user1" />
+        </group>
+        <group name="group2">
+            <member name="user2" />
+        </group>
+    </basicRegistry>
+
+    <!-- This is the keystore that will be used by SSL and by JWT. -->
+    <keyStore id="defaultKeyStore" location="public.jks" type="JKS" password="atbash" />
+
+
+    <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
+    <mpJwt id="jwtUserConsumer" keyName="theKeyId" audiences="targetService" issuer="${jwt.issuer}"/>
+
+</server>
